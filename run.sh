@@ -7,6 +7,8 @@ NC='\033[0m' # No Color
 rm -r my_result
 mkdir my_result
 
+#test
+
 function echo_myresult(){
     echo ""
     echo ""
