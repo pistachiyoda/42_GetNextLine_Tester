@@ -14,9 +14,9 @@ int main(int argc, char **argv)
         int ret = get_next_line(fd, &line);
         printf("======OUTPUT(line)=====\n");
         printf("ret:%d\n",ret);
-        printf("%s\n",line);
         if (ret <= 0)
             break ;
+        printf("%s\n",line);
     }
     exit(1);
 }
