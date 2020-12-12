@@ -4,17 +4,19 @@ tests="./tests/*"
 YELLOW='\033[0;33m'
 NC='\033[0m' # No Color
 
-#すでにディレクトリやファイルが有るときは作り直す
 rm -r my_result
 mkdir my_result
 
-function echo_result(){
-    # echo ""
-    # echo ""
-    # echo -e "${YELLOW}=====BUFFER_SIZE=$1 x $2=====${NC}" | tr '\0' '$$'
-    # echo ""
+function echo_myresult(){
+    echo ""
+    echo ""
+    echo -e "${YELLOW}=====BUFFER_SIZE=$1 x $2=====${NC}" | tr '\0' '$$'
+    echo ""
+    ./a.out $2
+}
+
+function output_myresult(){
     file_name=`echo $2 | sed "s/\.\/tests\///g"`
-    #./a.out $2
     ./a.out $2 > my_result/BUFFER_SIZE_$1x$file_name
 }
 
@@ -25,7 +27,8 @@ function output_result(){
         if [[ $file =~ ./tests/same_buf_100 ]]; then
             continue
         fi
-        echo_result $1 $file
+        output_myresult $1 $file
+        echo_myresult $1 $file
     done
 }
 
@@ -39,10 +42,13 @@ small_buf4=4
 output_result $small_buf4
 
 same_buf=100
-echo_result $same_buf ./tests/same_buf_100
+output_myresult $same_buf ./tests/same_buf_100
+echo_myresult $same_buf ./tests/same_buf_100
 
 plus1_buf=101
-echo_result $plus1_buf ./tests/same_buf_100
+output_myresult $plus1_buf ./tests/same_buf_100
+echo_myresult $plus1_buf ./tests/same_buf_100
 
 minus1_buf=99
-echo_result $minus1_buf ./tests/same_buf_100
+output_myresult $minus1_buf ./tests/same_buf_100
+echo_myresult $minus1_buf ./tests/same_buf_100
