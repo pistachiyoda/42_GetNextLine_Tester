@@ -4,6 +4,7 @@ tests="./tests/*"
 YELLOW='\033[0;33m'
 RED='\033[0;31m'
 GREEN='\033[0;32m'
+BLUE='\033[0;34m'
 NC='\033[0m' # No Color
 
 rm -r my_result
@@ -28,11 +29,15 @@ function output_myresult(){
     echo -e "${YELLOW}=====BUFFER_SIZE=$1 x $2=====${NC}" 
     diff my_result/BUFFER_SIZE_$1x$file_name correct_result/BUFFER_SIZE_$1x$file_name > /dev/null 2>&1
     if [ $? -eq 1 ] ; then
-        echo -e "${RED}=================THERE ARE DIFFERENCES=================${NC}"
+        echo -e "${RED}============THERE ARE DIFFERENCES============${NC}"
         echo_compare_result $1 $file_name
     else
-        echo -e "${GREEN}=================THERE IS NO DIFFERENCES=================${NC}"
+        echo -e "${GREEN}============THERE IS NO DIFFERENCE============${NC}"
     fi
+    echo -e "${BLUE}============LEAKS REPORT============${NC}"
+    leaks -atExit -- ./a.out $2 > leaks.txt
+    cat leaks.txt | sed -n '/leaks Report/,$p'
+    rm leaks.txt
 }
 
 function output_result(){
