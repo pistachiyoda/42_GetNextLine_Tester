@@ -22,6 +22,7 @@ function echo_compare_result(){
 }
 
 function output_myresult(){
+    gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
     file_name=`echo $2 | sed "s/\.\/tests\///g"`
     ./a.out $2 > my_result/BUFFER_SIZE_$1x$file_name
     echo -e "${YELLOW}=====BUFFER_SIZE=$1 x $2=====${NC}" 
@@ -35,8 +36,8 @@ function output_myresult(){
 }
 
 function output_result(){
-    gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
-    #gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./correct_get_next_line/get_next_line.c ./correct_get_next_line/libft/libft.a
+    # gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
+    # gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./correct_get_next_line/get_next_line.c ./correct_get_next_line/libft/libft.a
     for file in $tests; do
         if [[ $file =~ ./tests/same_buf_100 ]]; then
             continue
