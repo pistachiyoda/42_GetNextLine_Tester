@@ -51,6 +51,7 @@ function output_result(){
     done
 }
 
+# Mandatory part
 big_buf=1500
 output_result $big_buf
 
@@ -68,3 +69,25 @@ output_myresult $plus1_buf ./tests/same_buf_100
 
 minus1_buf=99
 output_myresult $minus1_buf ./tests/same_buf_100
+
+# bonus
+size_list=(1 4 1500)
+
+for size in ${size_list[@]}; do
+    bonus_correct=correct_result/BONUS_BUFFER_SIZE_${size}xnormal_901xlongline_multiple_6678
+    bonus_my=my_result/BONUS_BUFFER_SIZE_${size}xnormal_901xlongline_multiple_6678
+    gcc -o ./a.out -D BUFFER_SIZE=${size} main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
+    ./a.out ./tests/normal_901 ./tests/longline_multiple_6678 > ${bonus_my}
+    echo -e "${YELLOW}=====BONUS_BUFFER_SIZE_${size}xnormal_901xlongline_multiple_6678=====${NC}" 
+    diff ${bonus_my} ${bonus_correct} > /dev/null 2>&1
+    if [ $? -eq 1 ] ; then
+        echo -e "${RED}============THERE ARE DIFFERENCES============${NC}"
+        diff -u ${bonus_correct} ${bonus_my}
+    else
+        echo -e "${GREEN}============THERE IS NO DIFFERENCE============${NC}"
+    fi
+    echo -e "${BLUE}============LEAKS REPORT============${NC}"
+    leaks -atExit -- ./a.out ./tests/normal_901 ./tests/longline_multiple_6678 > leaks.txt
+    cat leaks.txt | sed -n '/leaks Report/,$p'
+    rm leaks.txt
+done

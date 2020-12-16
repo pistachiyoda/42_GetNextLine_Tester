@@ -8,17 +8,53 @@ int main(int argc, char **argv)
 {
     int fd;
     char *line;
-    fd = open(argv[1], O_RDONLY);
-    while (1)
+
+    if (!argv[2])
     {
-        int ret = get_next_line(fd, &line);
-        printf("======OUTPUT(line)=====\n");
-        printf("ret:%d\n",ret);
-        if (ret <= 0)
-            break ;
-        printf("%s\n",line);
-        free(line);
-        line = NULL;
+        // mandatoy
+        fd = open(argv[1], O_RDONLY);
+        while (1)
+        {
+            int ret = get_next_line(fd, &line);
+            printf("======OUTPUT(line)=====\n");
+            printf("ret:%d\n",ret);
+            if (ret <= 0)
+                break ;
+            printf("%s\n",line);
+            free(line);
+            line = NULL;
+        }
+    }
+    else
+    {
+        // bonus
+        int fd_a = open(argv[1], O_RDONLY);
+        int fd_b = open(argv[2], O_RDONLY);
+        fd = fd_a;
+        while (1)
+        {
+            if (fd == -1)
+            {
+                fd = fd == fd_a ? fd_b : fd_a;
+                continue;
+            }
+            int ret = get_next_line(fd, &line);
+            printf("======OUTPUT=====\n");
+            printf("ret:%d\n",ret);
+            if (ret <= 0)
+            {
+                if (fd == fd_a)
+                    fd_a = -1;
+                else
+                    fd_b = -1;
+                if (fd_a == -1 && fd_b == -1)
+                    break ;
+            }
+            printf("line:%s\n",line);
+            free(line);
+            line = NULL;
+            fd = fd == fd_a ? fd_b : fd_a;
+        }    
     }
     exit(1);
 }
