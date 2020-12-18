@@ -8,7 +8,5 @@ ret:1
 ret:1
 Lorem ipsum dolor sit amet, consectetur adipiscing elit,sed do eiusmod
 ======OUTPUT(line)=====
-ret:1
-tempor incididunt u
-======OUTPUT(line)=====
 ret:0
+tempor incididunt u
