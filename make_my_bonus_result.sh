@@ -64,11 +64,10 @@ echo -e "${YELLOW}=====BUFFER_SIZExnot_exist_file=====${NC}"
 gcc -o ./a.out -D BUFFER_SIZE=1 main.c ./cpy_gnl/get_next_line_bonus.c ./cpy_gnl/get_next_line_utils_bonus.c
 ./a.out not_exist_file
 
-## The fd is nor exist
-### 手動で確認
-
-## Line has Null
-### 手動で確認
+## The fd is not exist
+echo -e "${YELLOW}=====BUFFER_SIZE10xnot_exist_fd=====${NC}" 
+gcc -o ./a.out -D BUFFER_SIZE=10 main_for_fd_errorcheck.c ./cpy_gnl/get_next_line_bonus.c ./cpy_gnl/get_next_line_utils_bonus.c
+./a.out normal_901
 
 ## Test cases
 big_buf=1500
