@@ -23,7 +23,7 @@ function echo_compare_result(){
 }
 
 function output_myresult(){
-    gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
+    gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./cpy_gnl/get_next_line_bonus.c ./cpy_gnl/get_next_line_utils_bonus.c
     file_name=`echo $2 | sed "s/\.\/tests\///g"`
     ./a.out $2 > my_result/BUFFER_SIZE_$1x$file_name
     echo -e "${YELLOW}=====BUFFER_SIZE=$1 x $2=====${NC}" 
@@ -41,8 +41,8 @@ function output_myresult(){
 }
 
 function output_result(){
-    # gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
-    # gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./correct_get_next_line/get_next_line.c ./correct_get_next_line/libft/libft.a
+    # gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./cpy_gnl/get_next_line_bonus.c ./cpy_gnl/get_next_line_utils_bonus.c
+    # gcc -o ./a.out -D BUFFER_SIZE=$1 main.c ./correct_get_next_line/get_next_line_bonus.c ./correct_get_next_line/libft/libft.a
     for file in $tests; do
         if [[ $file =~ ./tests/same_buf_100 ]]; then
             continue
@@ -56,12 +56,12 @@ function output_result(){
 ### BUFFER_SIZE == -1
 minus_buf=-1
 echo -e "${YELLOW}=====BUFFER_SIZEx${minus_buf}=====${NC}" 
-gcc -o ./a.out -D BUFFER_SIZE=${minus_buf} main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
+gcc -o ./a.out -D BUFFER_SIZE=${minus_buf} main.c ./cpy_gnl/get_next_line_bonus.c ./cpy_gnl/get_next_line_utils_bonus.c
 ./a.out normal_901
 
 ## The file is not exist
 echo -e "${YELLOW}=====BUFFER_SIZExnot_exist_file=====${NC}" 
-gcc -o ./a.out -D BUFFER_SIZE=1 main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
+gcc -o ./a.out -D BUFFER_SIZE=1 main.c ./cpy_gnl/get_next_line_bonus.c ./cpy_gnl/get_next_line_utils_bonus.c
 ./a.out not_exist_file
 
 ## The fd is nor exist
@@ -95,7 +95,7 @@ size_list=(1 4 1500)
 for size in ${size_list[@]}; do
     bonus_correct=correct_result/BONUS_BUFFER_SIZE_${size}xnormal_901xlongline_multiple_6678
     bonus_my=my_result/BONUS_BUFFER_SIZE_${size}xnormal_901xlongline_multiple_6678
-    gcc -o ./a.out -D BUFFER_SIZE=${size} main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
+    gcc -o ./a.out -D BUFFER_SIZE=${size} main.c ./cpy_gnl/get_next_line_bonus.c ./cpy_gnl/get_next_line_utils_bonus.c
     ./a.out ./tests/normal_901 ./tests/longline_multiple_6678 > ${bonus_my}
     echo -e "${YELLOW}=====BONUS_BUFFER_SIZE_${size}xnormal_901xlongline_multiple_6678=====${NC}" 
     diff ${bonus_my} ${bonus_correct} > /dev/null 2>&1

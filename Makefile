@@ -16,6 +16,9 @@ cp:
 	cp $(PATH_GNL)/get_next_line.c $(CPY_DIR)
 	cp $(PATH_GNL)/get_next_line.h $(CPY_DIR)
 	cp $(PATH_GNL)/get_next_line_utils.c $(CPY_DIR)
+	cp $(PATH_GNL)/get_next_line_bonus.c $(CPY_DIR)
+	cp $(PATH_GNL)/get_next_line_bonus.h $(CPY_DIR)
+	cp $(PATH_GNL)/get_next_line_utils_bonus.c $(CPY_DIR)
 clean:
 	rm -rf $(CPY_DIR)
 	rm -f $(OBJ) $(BONUS_OBJ)
