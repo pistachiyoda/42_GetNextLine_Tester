@@ -41,6 +41,9 @@ int main(int argc, char **argv)
             int ret = get_next_line(fd, &line);
             printf("======OUTPUT=====\n");
             printf("ret:%d\n",ret);
+            printf("line:%s\n",line);
+            free(line);
+            line = NULL;
             if (ret <= 0)
             {
                 if (fd == fd_a)
@@ -50,9 +53,6 @@ int main(int argc, char **argv)
                 if (fd_a == -1 && fd_b == -1)
                     break ;
             }
-            printf("line:%s\n",line);
-            free(line);
-            line = NULL;
             fd = fd == fd_a ? fd_b : fd_a;
         }    
     }
