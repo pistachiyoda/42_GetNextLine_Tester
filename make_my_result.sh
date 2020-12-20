@@ -35,8 +35,8 @@ function output_myresult(){
         echo -e "${GREEN}============THERE IS NO DIFFERENCE============${NC}"
     fi
     echo -e "${BLUE}============LEAKS REPORT============${NC}"
-    leaks -atExit -- ./a.out $2 > leaks.txt
-    cat leaks.txt | sed -n '/leaks Report/,$p'
+    valgrind --leak-check=full --show-leak-kinds=all ./a.out $2 > /dev/null 2> leaks.txt
+    cat leaks.txt | sed -n -e '/.*HEAP SUMMARY:.*/,$p'
     rm leaks.txt
 }
 
@@ -52,6 +52,18 @@ function output_result(){
 }
 
 # Mandatory part
+## Error check
+### BUFFER_SIZE == -1
+# minux_buf=-1
+# output_result $minux_buf
+
+## The file is not exist
+
+## The fd is nor exist
+
+## Line has Null
+
+## Test cases
 big_buf=1500
 output_result $big_buf
 
@@ -87,7 +99,7 @@ for size in ${size_list[@]}; do
         echo -e "${GREEN}============THERE IS NO DIFFERENCE============${NC}"
     fi
     echo -e "${BLUE}============LEAKS REPORT============${NC}"
-    leaks -atExit -- ./a.out ./tests/normal_901 ./tests/longline_multiple_6678 > leaks.txt
-    cat leaks.txt | sed -n '/leaks Report/,$p'
+    valgrind --leak-check=full --show-leak-kinds=all ./a.out ./tests/normal_901 ./tests/longline_multiple_6678 > /dev/null 2> leaks.txt
+    cat leaks.txt | sed -n -e '/.*HEAP SUMMARY:.*/,$p'
     rm leaks.txt
 done
