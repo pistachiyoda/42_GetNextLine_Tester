@@ -54,14 +54,21 @@ function output_result(){
 # Mandatory part
 ## Error check
 ### BUFFER_SIZE == -1
-# minux_buf=-1
-# output_result $minux_buf
+minus_buf=-1
+echo -e "${YELLOW}=====BUFFER_SIZEx${minus_buf}=====${NC}" 
+gcc -o ./a.out -D BUFFER_SIZE=${minus_buf} main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
+./a.out normal_901
 
 ## The file is not exist
+echo -e "${YELLOW}=====BUFFER_SIZExnot_exist_file=====${NC}" 
+gcc -o ./a.out -D BUFFER_SIZE=1 main.c ./cpy_gnl/get_next_line.c ./cpy_gnl/get_next_line_utils.c
+./a.out not_exist_file
 
 ## The fd is nor exist
+### 手動で確認
 
 ## Line has Null
+### 手動で確認
 
 ## Test cases
 big_buf=1500
