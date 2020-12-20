@@ -1,4 +1,4 @@
-PATH_GNL = ../get_next_line_1
+PATH_GNL = ../get_next_line
 
 NAME = get_next_line.a
 CPY_DIR = cpy_gnl/
