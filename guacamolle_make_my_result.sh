@@ -20,8 +20,9 @@ mkdir my_result
 
 function valgrind_leaks_report()
 {
+    $FILE=$1
     echo -e "${BLUE}============VALGRIND REPORT============${NC}"
-    valgrind --leak-check=full --show-leak-kinds=all ./a.out $2 > /dev/null 2> leaks.txt
+    valgrind --leak-check=full --show-leak-kinds=all ./a.out $FILE > /dev/null 2> leaks.txt
     cat leaks.txt | sed -n -e '/.*HEAP SUMMARY:.*/,$p'
     rm leaks.txt
 }
@@ -46,7 +47,7 @@ function error_checks(){
     fi
     cat error_check_result.txt
     rm error_check_result.txt
-    valgrind_leaks_report
+    valgrind_leaks_report $FILE
 }
 
 ### BUFFER_SIZE == 0
@@ -60,7 +61,7 @@ error_checks 10 ./tests/not_exist_file main.c
 
 ### The fd is not exist
 error_checks 10 ./tests/normal_901 main_for_fd_errorcheck.c
-exit
+
 # Mandatory part2
 ## Test cases
 
@@ -78,7 +79,7 @@ function make_my_result(){
     else
         echo -e "${GREEN}============THERE IS NO DIFFERENCE============${NC}"
     fi
-    valgrind_leaks_report
+    valgrind_leaks_report $FILE
 }
 
 ### normal cases
@@ -142,5 +143,5 @@ for size in ${size_list[@]}; do
     else
         echo -e "${GREEN}============THERE IS NO DIFFERENCE============${NC}"
     fi
-    valgrind_leaks_report
+    valgrind_leaks_report $FILE
 done
