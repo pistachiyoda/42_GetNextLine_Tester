@@ -20,7 +20,7 @@ mkdir my_result
 
 function valgrind_leaks_report()
 {
-    $FILE=$1
+    # ${FILE}={$1}
     echo -e "${BLUE}============VALGRIND REPORT============${NC}"
     valgrind --leak-check=full --show-leak-kinds=all ./a.out $FILE > /dev/null 2> leaks.txt
     cat leaks.txt | sed -n -e '/.*HEAP SUMMARY:.*/,$p'
@@ -47,7 +47,7 @@ function error_checks(){
     fi
     cat error_check_result.txt
     rm error_check_result.txt
-    valgrind_leaks_report $FILE
+    valgrind_leaks_report ${FILE}
 }
 
 ### BUFFER_SIZE == 0
