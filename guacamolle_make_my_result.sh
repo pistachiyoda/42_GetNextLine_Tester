@@ -20,10 +20,13 @@ mkdir my_result
 
 function valgrind_leaks_report()
 {
-    # ${FILE}={$1}
     echo -e "${BLUE}============VALGRIND REPORT============${NC}"
     valgrind --leak-check=full --show-leak-kinds=all ./a.out $FILE > /dev/null 2> leaks.txt
-    cat leaks.txt | sed -n -e '/.*HEAP SUMMARY:.*/,$p'
+    if [ `cat leaks.txt | grep 'get_next_line (in ./a.out)'` ] ; then
+        echo -e "${RED}============MAY BE STILL REACHABLE...============${NC}"
+    else
+        echo -e "${GREEN}============OK============${NC}"
+    fi
     rm leaks.txt
 }
 
@@ -143,5 +146,4 @@ for size in ${size_list[@]}; do
     else
         echo -e "${GREEN}============THERE IS NO DIFFERENCE============${NC}"
     fi
-    valgrind_leaks_report $FILE
 done
