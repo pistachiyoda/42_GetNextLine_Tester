@@ -37,6 +37,7 @@ function error_checks(){
         echo -e "${RED}============RETURN KO============${NC}"
     fi
     cat error_check_result.txt
+    rm error_check_result.txt
     leaks_report
 }
 
