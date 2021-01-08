@@ -1,4 +1,4 @@
-#!/bun/bash
+#!/bin/bash
 make fclean
 tests="./tests/*"
 
